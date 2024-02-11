@@ -2,7 +2,7 @@
 # Description: Uses turtles to create a
 #              screensaver that includes
 #              bouncing objects
-# Coder: Joseph K
+# Coder: jsk
 # Start Date: January 9th(?) 2023
 
 DEBUG = False
@@ -65,10 +65,10 @@ def start(obj_num):
         obj_velocity = [random.randint(-10, 10), random.randint(-10, 10)]
         
         #Give object random coordinates within screen
-        obj_coords = [random.randrange(-(screen.window_width()/2) + 20,
-                                        (screen.window_width()/2) - 20),
-                       random.randrange(-(screen.window_height()/2) + 20,
-                                         (screen.window_height()/2) - 20)]
+        obj_coords = [random.randrange(-int(screen.window_width()/2) + 20,
+                                        int(screen.window_width()/2) - 20),
+                       random.randrange(-int(screen.window_height()/2) + 20,
+                                         int(screen.window_height()/2) - 20)]
         obj.goto(obj_coords) #goto coordinates
 
         
