@@ -1,3 +1,9 @@
 This program will not be sent into AP for their grading
     A "practice" for how to create the final project where the teacher will not look over this code
 DO NOT USE THIS PROGRAM IN THE "REAL" AP PROJECT
+
+
+
+
+@hk105 to work on menu and placment
+@JosephK2024 to work on angles and key_press events
