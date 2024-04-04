@@ -20,12 +20,11 @@ window.addshape(hoop)
 #-----Global Variables-----
 valid_angles = [35, 45, 55, 65]
 number_of_balls = 5  #number of tries at getting the basket
-game_running = False  #is the game in progress
-program_online = True  #whether or not the program will actually start the game
-basketball_start = (-500, -500
+basketball_start = (-200, -200
                     )  #@hk105 here to change basketball starting position
 timer = 0  #for power of shot
 active_ball = None  #currently active ball
+balls = []
 
 
 #-----Helper funcitons-----
@@ -58,18 +57,6 @@ def create_balls(x):
   return balls
 
 
-def pick_ball_path():
-  """
-    takes the current ball and shoots it
-    based on it's heading and how long the shot was wound up\n
-    STUB: returns nothing
-    """
-  global active_ball, timer
-  print(timer, "DONE")
-  window.onkeypress(do_nothing, "space")
-  return
-
-
 def start_on_click(x, y):
   """starts the game if the window is clicked in the c"""
   global game_running
@@ -83,7 +70,7 @@ def do_nothing(x, y):
   does absolutely nothing"""
   return
 
-def do_nothing():
+def do_nothing2():
   """placeholder function for onkeypress for turtle requiring function paramater\n
   does absolutely nothing"""
   return
@@ -99,15 +86,17 @@ def display_menu():
   menu_turt.write("Welcome to the Game", align='center', font=('Arial', 13, 'bold'))
   menu_turt.goto(0, 0)
   menu_turt.write("Game info goes here", align='center', font=('Arial', 13, 'normal'))
+
   #onclick  
   window.onclick(start_on_click)
+  window.onkeypress(exit, "BackSpace")
   window.listen()
 
 
 def start_game():
   """setups the game for play \n
     changes inputs to fit the gameplay"""
-  global active_ball
+  global active_ball, balls
   #clear window and keypress events
   window.clear()
   window.onclick(do_nothing)
@@ -115,21 +104,21 @@ def start_game():
   #put basketball and hoop in correct locations
   setup_hoop()
   balls = create_balls(number_of_balls)
-  for ball in balls:
-    active_ball = ball
-    ball.showturtle()
-    window.onkeypress(begin_shot, "space")
 
+  #start the first ball
+  active_ball = balls[0]
+  active_ball.showturtle()
+  window.onkeypress(begin_shot, "space")
+
+    
 
 def setup_hoop():
-  """moves the hoop into the correct position dependant on the current screen size
-      STUB"""
+  """moves the hoop into the correct position"""
   global hoop
   turt = turtle.Turtle()
   turt.up()
   turt.goto(60, 60)
   turt.shape(hoop)
-  return
 
 
 def begin_shot():
@@ -137,21 +126,44 @@ def begin_shot():
   global timer, after_id
   if (timer<5) and (timer>0):
     turtle.getcanvas().after_cancel(after_id) #cancel previous ontimer/after event
-
-  timer += 0.1
   print(timer)
-  after_id = turtle.getcanvas().after(500, end_shot) #wait for a bit before doing end_shot so more input can be used
-  
+  timer += 0.1
+  after_id = turtle.getcanvas().after(500, shoot_ball) #wait for a bit before doing the shot so more input can be done
   
 
-
-def end_shot():
-  """end the timer and shoot the ball"""
-  global timer
+def shoot_ball():
+  """
+    takes the current ball and shoots it
+    based on it's heading and how long the shot was wound up\n
+    """
+  global active_ball, timer
+  window.onkeypress(do_nothing2, "space")
+  active_ball.speed(timer)
+  active_ball.forward(100*timer)
   timer = 0
-  pick_ball_path()
+  next_ball()
 
+def next_ball():
+  """set active ball to next ball in array of balls"""
+  global balls, active_ball
+  i = balls.index(active_ball)
+  i += 1
+  try:# remove error of incrementing past array size
+    active_ball = balls[i]
+    active_ball.showturtle()
+    window.onkeypress(begin_shot, "space")
+  except:
+    game_over()
+  
 
+  
+def game_over():
+  global game_running, balls
+  game_running = False
+  window.onkeypress(do_nothing2, "space")
+  window.clear()
+  balls = []
+  display_menu()
 
 #-----Setup-----#
 
