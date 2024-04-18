@@ -9,7 +9,7 @@ Criteria:
         Must help the program complete it's purpose and make the program easier to develop
     Function/Procedure
         Must be student developed and have at least one parameter
-        Must include sequencting selection and iteration inside of it
+        Must include sequencing selection and iteration inside of it
             Essentially a for loop, if/else trees, and encorporate a list
     Output
         Must contain output changed based on the data/user input
@@ -44,3 +44,11 @@ Will begin with getting the "barebones" of each idea, and then decide which one 
 
 
 ....Scratch that, already made it too far in the boolean game
+
+
+Boolean_Practice.py will contain all further edits
+Has function with 1+parameter, sequencing and selection
+    create_bool_string(bool)
+    get_const(object)
+    get_bool_snip(bool, bool)
+    
