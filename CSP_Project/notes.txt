@@ -1,0 +1,46 @@
+This folder will hold all the notes and information for the final CSP project according to the AP guidlines
+It should also contain notes that will help with the creation of the project and will ensure the project meets all criteria
+
+
+Criteria:
+    Input
+        Can be from user, external device, online data, or a file
+    List/Collection type
+        Must help the program complete it's purpose and make the program easier to develop
+    Function/Procedure
+        Must be student developed and have at least one parameter
+        Must include sequencting selection and iteration inside of it
+            Essentially a for loop, if/else trees, and encorporate a list
+    Output
+        Must contain output changed based on the data/user input
+
+
+
+
+
+Some ideas:
+    Integration and other calc functions (basically make a calculator)
+        Includes input, function, and output easily
+            User input(what they want to do and what they want to do to it)
+        Struggling to come up with a way to incorporate lists
+
+    Boolean Game (to help future students with understanding boolean equations)
+        Includes input, function, output, and Lists easily
+        Would take a while to get it to a functioning level and even longer to be user friendly
+
+    Some game (something to do with turtle and it's space, idk movement too ig)
+        Really easy to include all the requirements but annoying to come up with an idea
+        Feels like a cop-out
+
+
+
+
+
+Will begin with getting the "barebones" of each idea, and then decide which one will be easiest to include all criteria while still giving the satisfaction of a "completed project"
+
+
+
+
+
+
+....Scratch that, already made it too far in the boolean game

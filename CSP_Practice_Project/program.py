@@ -1,7 +1,6 @@
 # Basketball thing
 # coded by: jsk & hk
 import turtle
-import time
 import random
 
 #Turtle tester
@@ -45,7 +44,7 @@ def create_balls(x):
     then return them all as an array
     """
   balls = []
-  for i in range(5):
+  for i in range(x+1): #+1 so program doesn't end before last ball is sent
     new_turt = turtle.Turtle()
     new_turt.up()
     new_turt.speed(0)
