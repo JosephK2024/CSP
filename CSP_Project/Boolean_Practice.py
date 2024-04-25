@@ -157,10 +157,12 @@ def start_game():
     try:
         rounds = int(input("How many rounds?: "))
         difficulty = int(input("What difficulty would you like to play?(1-3): "))
+        print("-"*50)
     except ValueError:
         print("Wrong input, try inputting a number." )
+        print("-"*50)
         start_game()
-    
+
     for i in range(0, rounds):
         pscore = score
         boolean = randbool()
@@ -179,15 +181,19 @@ def start_game():
         else:
             print("Yes! This was " + str(boolean))
         print("Score: "  + str(score))
+        print("-"*50)
     
     print("Your final score was: " + str(score/(rounds*difficulty)*100) + "%, for " + str(rounds) + " rounds")
-        
-    if (input("Would you like to try again?(y/n): " == "y")):
+    
+    print("-"*50)
+    again = input("Would you like to try again?(y/n): ") == "y"
+    if (again):
         start_game()
 
 
 
 # preface at start
+print("-"*50)
 print("To begin answer a few questions about the game by typing in the terminal and pressing enter.")
 start_game()
 
