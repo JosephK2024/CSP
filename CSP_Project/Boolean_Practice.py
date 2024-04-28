@@ -211,7 +211,7 @@ def run_game():
     
     print("Your final score was: " + str(score/(rounds*difficulty)*100) +
            "%, for " + str(rounds) + " rounds")
-        
+    print("-"*50)#formats output
     again = input("Would you like to try again?(y/n): ").lower() 
     if (again== "y"):
         run_game()
@@ -219,6 +219,7 @@ def run_game():
 
 
 # preface at start
+print("-"*50)#formats output
 print("To begin answer a few questions about the game" +
       " by typing in the terminal"+
        " and pressing enter.")
