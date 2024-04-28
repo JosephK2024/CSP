@@ -1,15 +1,28 @@
-# Boolean Game (to help future students with understanding boolean equations)
+# Boolean_Practice.py
+# Description: Automatically generates "boolean strings" based
+#              on the input of a user and test their knowledge of
+#              Booleans and operators often used with Booleans
+# Coder(s): Joseph Kennedy
+# Date of Completion: April 28, 2024
 
-import random
+#The only NON-STUDENT portion of this program (other than built in python)
+import random 
 
-#3 difficulties with different likelyhoods of getting certain inputs
+#3 difficulties with different likelyhoods of getting certain inputs,
+# duplicates for differing difficulty
 #TODO: expand constant list
-T_const1 = ["True", "1==1", "True", "True", "1==1"] #duplicates for difficulty tweak
-F_const1 = ["False", "1!=1", "False", "False", "1==1"]
-T_const2 = ["True", "1==1", "not(False)", "1==1", "not(False)"]
-F_const2 = ["False", "1!=1", "not(True)", "1!=1", "not(True)"]
-T_const3 = ["True", "1==1", "not(False)", "bool(0)", "1==1", "not(False)"]
-F_const3 = ["False", "1!=1", "not(True)", "bool(1)", "1!=1", "not(True)"]
+T_const1 = ["True", "(1 == 1)", "(1 != 0)" "True",
+             "(1 == 1)", "True", "(1 == 1)", "True"]
+F_const1 = ["False", "(1 != 1)", "False", "(1 == 0)",
+             "False", "(1 == 0)"]
+T_const2 = ["True", "(1 == 1)", "not(False)",
+             "(1 == 1)", "not(False)"]
+F_const2 = ["False", "(1 != 1)", "not(True)",
+             "(1 != 1)", "not(True)"]
+T_const3 = ["True", "(1 == 1)", "not(False)", "bool(0)",
+             "(1 == 1)", "not(False)"]
+F_const3 = ["False", "(1 != 1)", "not(True)", "bool(1)",
+             "(1 != 1)", "not(True)"]
 T_const = [T_const1, T_const2, T_const3]
 F_const = [F_const1, F_const2, F_const3]
 
@@ -21,20 +34,24 @@ score = 0
 #-----Helper Methods-----
 def randbool():
     """return a random boolean"""
-    return bool(random.randint(0, 1)) # 0 is false, 1 is true (when cast to boolean in python)
+    # 0 is false, 1 is true (when cast to boolean in python)
+    return bool(random.randint(0, 1))
 
 def print_list(list):
     """print a list with spaces between each item"""
     i = 0
     for item in list:
         copy = list.copy()
+        """there is definitely some errors with the parentheses system
+            but it is too bothersome to fix right now"""
+        #TODO: fix the error here
         try:
             if not((item == "(") or (copy.pop(i+1) == ")")):
                 end = " "
             else:
                 end = ""
-        except:
-            if not((item == "(") or (copy.pop(i-1) == ")")): #remove end of list error
+        except:#end of list error likely
+            if not((item == "(") or (copy.pop(i-1) == ")")): 
                 end = " "
             else:
                 end = ""
@@ -57,7 +74,7 @@ def create_bool_string(boolean):
                 print(end="")
             inverse = randbool()
             addition = get_bool_snip(curr_boolean, inverse)
-            if inverse: #flip current boolean if inverted AFTER addition is found
+            if inverse:#flip current boolean AFTER addition is found
                 curr_boolean = not(curr_boolean)
             bool_string.append(addition)
         except: # stop error of not having a current boolean
@@ -66,7 +83,6 @@ def create_bool_string(boolean):
         length -= 1
 
     # ensure bool_string is equal to boolean
-    # TODO: FIX THIS!!!!
     if (boolean != curr_boolean):
         bool_string.append(get_bool_snip(curr_boolean, inverse=True))
     
@@ -94,16 +110,12 @@ def create_bool_string(boolean):
     i = 0
     skip = False # account for infinite loop 
     for substring in bool_string: 
-        #and higher priority than or, ensure parentheses before
+        #"and" higher priority than "or", ensure parentheses seperating these
         if (substring == "and") and (i > 2): #i>2 for parentheses before start
             if not(skip):
-                bool_string.insert(0, "(")
+                bool_string.insert(0, "(") #the start is the best spot for this
                 i+=1
-                try: #stop end of list error
-                    bool_string.insert(i, ")")
-                except:
-                    print("End of list reached")
-                    bool_string.append(")")
+                bool_string.insert(i, ")")
                 skip = True
                 goal = i%2
             elif (i%2 == goal):
@@ -113,8 +125,8 @@ def create_bool_string(boolean):
     return bool_string
 
 def get_bool_snip(curr_boolean,  inverse = False):
-    """if inverse is True, grab a string that will flip the current boolean\n
-        otherwise, grab a string that will not flip the current boolean"""
+    """if inverse is True, grabs a string that will flip the current boolean\n
+        otherwise, grabs a string that will not flip the current boolean"""
     
     concat = "" # begin with empty string
     
@@ -127,7 +139,7 @@ def get_bool_snip(curr_boolean,  inverse = False):
                 concat = "and True"
             else:
                 concat = "or " + str(randbool())
-    else:
+    else:#!curr_boolean
         if inverse:
             concat = "or True" # only way to invert a False
         else:
@@ -143,23 +155,38 @@ def get_const(item):
     """get a constant equal to the item from a pre-defined list"""
     global T_const, F_const, difficulty
     if item:
+        #randomize & return
         r = random.randint(0, len(T_const[difficulty-1]) - 1)
         return T_const[difficulty-1][r]
     elif not(item):
+        #randomize & return
         r = random.randint(0, len(F_const[difficulty-1]) - 1)
         return F_const[difficulty-1][r]
 
 #-----Events----
-def start_game():
+def run_game():
     """start a new instance of the game"""
     global difficulty, rounds, score
     score = 0
     try:
         rounds = int(input("How many rounds?: "))
-        difficulty = int(input("What difficulty would you like to play?(1-3): "))
+        #ensure rounds != 0
+        if rounds <= 0:
+            print("Don't use zero or negitives as the number of rounds.")
+            print("-"*50)#formats output
+            run_game()
+        
+        difficulty = int(input("What difficulty would you"+ 
+                               " like to play?(1-3): "))
+        if (difficulty >= (len(T_const) + 1)) or (difficulty <= 0):
+            print("Choose a valid difficulty.")
+            print("-"*50)#formats output
+            run_game()
+        print("-"*50)#formats output
     except ValueError:
         print("Wrong input, try inputting a number." )
-        start_game()
+        print("-"*50)#formats output
+        run_game()
     
     for i in range(0, rounds):
         pscore = score
@@ -168,27 +195,31 @@ def start_game():
         print("What does this result in? ", end="")
         print_list(bool_string)
         answer = input("\nInput(T/F): ")
+        answer = answer.upper()
         if boolean:
-            if answer == "T":
+            if answer[0] == "T":
                 score += difficulty
         else:  
-            if answer == "F":
+            if answer[0] == "F":
                 score += difficulty
         if pscore == score:
             print("Too bad, this one was " + str(boolean))
         else:
             print("Yes! This was " + str(boolean))
         print("Score: "  + str(score))
+        print("-"*50)#formats output
     
-    print("Your final score was: " + str(score/(rounds*difficulty)*100) + "%, for " + str(rounds) + " rounds")
+    print("Your final score was: " + str(score/(rounds*difficulty)*100) +
+           "%, for " + str(rounds) + " rounds")
         
-    if (input("Would you like to try again?(y/n): " == "y")):
-        start_game()
+    again = input("Would you like to try again?(y/n): ").lower() 
+    if (again== "y"):
+        run_game()
 
 
 
 # preface at start
-print("To begin answer a few questions about the game by typing in the terminal and pressing enter.")
-start_game()
-
-
+print("To begin answer a few questions about the game" +
+      " by typing in the terminal"+
+       " and pressing enter.")
+run_game()
